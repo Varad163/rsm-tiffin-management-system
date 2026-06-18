@@ -16,6 +16,11 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(DuplicateMenuException.class)
+    public ResponseEntity<Map<String, Object>> handleDuplicateMenu(DuplicateMenuException ex) {
+        return buildErrorResponse(HttpStatus.CONFLICT, ex.getMessage());
+    }
+
     @ExceptionHandler(DuplicateAttendanceException.class)
     public ResponseEntity<Map<String, Object>> handleDuplicateAttendance(DuplicateAttendanceException ex) {
         return buildErrorResponse(HttpStatus.CONFLICT, ex.getMessage());
