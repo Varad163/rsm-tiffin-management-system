@@ -16,6 +16,16 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(DuplicateAttendanceException.class)
+    public ResponseEntity<Map<String, Object>> handleDuplicateAttendance(DuplicateAttendanceException ex) {
+        return buildErrorResponse(HttpStatus.CONFLICT, ex.getMessage());
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<Map<String, Object>> handleAccessDenied(AccessDeniedException ex) {
+        return buildErrorResponse(HttpStatus.FORBIDDEN, ex.getMessage());
+    }
+
     @ExceptionHandler(EmailAlreadyExistsException.class)
     public ResponseEntity<Map<String, Object>> handleEmailAlreadyExists(EmailAlreadyExistsException ex) {
         return buildErrorResponse(HttpStatus.CONFLICT, ex.getMessage());
