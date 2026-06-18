@@ -19,7 +19,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +27,6 @@ public class StudentService {
     private final StudentRepository studentRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final FileStorageService fileStorageService;
 
     @Transactional(readOnly = true)
     public Page<StudentResponse> getAllStudents(String name, String email, Pageable pageable) {
@@ -92,18 +90,6 @@ public class StudentService {
     }
 
     @Transactional
-    public StudentResponse uploadAadhaar(Long id, MultipartFile file) {
-        Student student = findStudentById(id);
-        return saveAadhaarImage(student, file);
-    }
-
-    @Transactional
-    public StudentResponse uploadCurrentStudentAadhaar(MultipartFile file) {
-        Student student = findStudentByEmail(getCurrentUserEmail());
-        return saveAadhaarImage(student, file);
-    }
-
-    @Transactional
     public void deleteStudent(Long id) {
         Student student = findStudentById(id);
 
@@ -112,16 +98,6 @@ public class StudentService {
 
         studentRepository.save(student);
         userRepository.save(student.getUser());
-    }
-
-    private StudentResponse saveAadhaarImage(Student student, MultipartFile file) {
-        if (StringUtils.hasText(student.getAadhaarImage())) {
-            fileStorageService.deleteFile(student.getAadhaarImage());
-        }
-
-        String storedFilename = fileStorageService.storeAadhaarImage(file);
-        student.setAadhaarImage(storedFilename);
-        return mapToResponse(studentRepository.save(student));
     }
 
     private void applyUpdate(Student student, StudentUpdateRequest request) {
