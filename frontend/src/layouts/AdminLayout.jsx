@@ -20,6 +20,13 @@ const AdminLayout = () => {
     navigate('/login');
   };
 
+  const today = new Intl.DateTimeFormat('en-IN', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  }).format(new Date());
+
   return (
     <div className="min-h-screen bg-zinc-50">
       <div className="mx-auto flex min-h-screen max-w-[1600px]">
@@ -65,14 +72,26 @@ const AdminLayout = () => {
         </aside>
 
         <div className="flex min-w-0 flex-1 flex-col">
-          <header className="flex items-center justify-between border-b border-zinc-200 bg-white px-4 py-4 sm:px-8 lg:hidden">
+          <header className="sticky top-0 z-10 flex items-center justify-between border-b border-zinc-200 bg-white px-4 py-4 sm:px-8">
             <div>
-              <p className="text-xs uppercase tracking-[0.2em] text-zinc-400">Admin</p>
-              <p className="text-sm font-medium text-zinc-900">{user?.email}</p>
+              <p className="text-xs font-medium uppercase tracking-[0.2em] text-zinc-400 lg:hidden">
+                Admin Panel
+              </p>
+              <p className="hidden text-xs font-medium uppercase tracking-[0.2em] text-zinc-400 lg:block">
+                {today}
+              </p>
+              <p className="mt-1 text-sm font-medium text-zinc-900 lg:hidden">{user?.email}</p>
             </div>
-            <Button variant="ghost" size="sm" onClick={handleLogout}>
-              Logout
-            </Button>
+
+            <div className="flex items-center gap-3 sm:gap-4">
+              <span className="hidden text-sm text-zinc-500 md:inline">{today}</span>
+              <span className="hidden rounded-full border border-zinc-200 px-3 py-1 text-sm text-zinc-700 sm:inline">
+                {user?.email}
+              </span>
+              <Button variant="ghost" size="sm" onClick={handleLogout} className="lg:hidden">
+                Logout
+              </Button>
+            </div>
           </header>
 
           <main className="flex-1 px-4 py-6 sm:px-8 sm:py-10">

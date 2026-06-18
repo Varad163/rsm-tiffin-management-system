@@ -4,7 +4,7 @@ import AdminLayout from '../layouts/AdminLayout';
 import StudentLayout from '../layouts/StudentLayout';
 import Login from '../pages/auth/Login';
 import Register from '../pages/auth/Register';
-import AdminDashboard from '../pages/admin/Dashboard';
+import AdminDashboard from '../pages/admin/AdminDashboard';
 import StudentDashboard from '../pages/student/Dashboard';
 import { useAuth } from '../context/AuthContext';
 
