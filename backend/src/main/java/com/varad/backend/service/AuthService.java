@@ -6,6 +6,8 @@ import com.varad.backend.dto.RegisterRequest;
 import com.varad.backend.entity.User;
 import com.varad.backend.entity.enums.Role;
 import com.varad.backend.exception.EmailAlreadyExistsException;
+import com.varad.backend.entity.Student;
+import com.varad.backend.repository.StudentRepository;
 import com.varad.backend.repository.UserRepository;
 import com.varad.backend.security.JwtService;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class AuthService {
 
     private final UserRepository userRepository;
+    private final StudentRepository studentRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
@@ -39,6 +42,12 @@ public class AuthService {
                 .build();
 
         userRepository.save(user);
+
+        Student student = Student.builder()
+                .user(user)
+                .active(true)
+                .build();
+        studentRepository.save(student);
 
         return buildAuthResponse(user);
     }
