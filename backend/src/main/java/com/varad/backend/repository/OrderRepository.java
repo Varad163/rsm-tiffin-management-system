@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
@@ -45,4 +46,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             @Param("to") LocalDate to,
             Pageable pageable
     );
+
+    @Query("SELECT o FROM Order o ORDER BY o.createdAt DESC")
+    List<Order> findRecentOrders(Pageable pageable);
 }

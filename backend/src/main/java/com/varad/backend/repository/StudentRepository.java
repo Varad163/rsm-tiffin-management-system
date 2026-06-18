@@ -17,6 +17,8 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 
     boolean existsByUserId(Long userId);
 
+    long countByActiveTrue();
+
     @Query("""
             SELECT s FROM Student s
             JOIN s.user u
