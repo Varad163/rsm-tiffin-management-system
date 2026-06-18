@@ -16,6 +16,16 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(DuplicateOrderException.class)
+    public ResponseEntity<Map<String, Object>> handleDuplicateOrder(DuplicateOrderException ex) {
+        return buildErrorResponse(HttpStatus.CONFLICT, ex.getMessage());
+    }
+
+    @ExceptionHandler(InvalidOrderStateException.class)
+    public ResponseEntity<Map<String, Object>> handleInvalidOrderState(InvalidOrderStateException ex) {
+        return buildErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
+
     @ExceptionHandler(DuplicateMenuException.class)
     public ResponseEntity<Map<String, Object>> handleDuplicateMenu(DuplicateMenuException ex) {
         return buildErrorResponse(HttpStatus.CONFLICT, ex.getMessage());
