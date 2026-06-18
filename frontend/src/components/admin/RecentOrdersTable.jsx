@@ -1,35 +1,5 @@
-const statusStyles = {
-  PENDING: 'bg-zinc-100 text-zinc-700',
-  CONFIRMED: 'bg-zinc-900 text-white',
-  CANCELLED: 'bg-zinc-200 text-zinc-600 line-through',
-  DELIVERED: 'border border-zinc-900 text-zinc-900',
-};
-
-const StatusBadge = ({ status }) => (
-  <span
-    className={`inline-flex rounded-full px-2.5 py-1 text-xs font-medium ${
-      statusStyles[status] || 'bg-zinc-100 text-zinc-700'
-    }`}
-  >
-    {status}
-  </span>
-);
-
-const formatCurrency = (amount) =>
-  new Intl.NumberFormat('en-IN', {
-    style: 'currency',
-    currency: 'INR',
-    maximumFractionDigits: 0,
-  }).format(amount ?? 0);
-
-const formatDate = (dateString) => {
-  if (!dateString) return '—';
-  return new Intl.DateTimeFormat('en-IN', {
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric',
-  }).format(new Date(dateString));
-};
+import { formatCurrency, formatDate } from '../../utils/formatters';
+import StatusBadge from '../ui/StatusBadge';
 
 const RecentOrdersTable = ({ orders = [] }) => {
   if (orders.length === 0) {
@@ -65,9 +35,7 @@ const RecentOrdersTable = ({ orders = [] }) => {
                 <div className="text-sm font-medium text-zinc-900">{order.studentEmail}</div>
                 <div className="text-xs text-zinc-400">{order.collegeName || '—'}</div>
               </td>
-              <td className="px-4 py-4 text-sm text-zinc-600">
-                {formatDate(order.menuDate)}
-              </td>
+              <td className="px-4 py-4 text-sm text-zinc-600">{formatDate(order.menuDate)}</td>
               <td className="px-4 py-4 text-sm font-medium text-zinc-900">
                 {formatCurrency(order.totalAmount)}
               </td>

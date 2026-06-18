@@ -5,7 +5,15 @@ import StudentLayout from '../layouts/StudentLayout';
 import Login from '../pages/auth/Login';
 import Register from '../pages/auth/Register';
 import AdminDashboard from '../pages/admin/AdminDashboard';
-import StudentDashboard from '../pages/student/Dashboard';
+import AdminStudents from '../pages/admin/AdminStudents';
+import AdminAttendance from '../pages/admin/AdminAttendance';
+import AdminMenus from '../pages/admin/AdminMenus';
+import AdminOrders from '../pages/admin/AdminOrders';
+import StudentDashboard from '../pages/student/StudentDashboard';
+import StudentProfile from '../pages/student/StudentProfile';
+import StudentAttendance from '../pages/student/StudentAttendance';
+import StudentMenu from '../pages/student/StudentMenu';
+import StudentOrders from '../pages/student/StudentOrders';
 import { useAuth } from '../context/AuthContext';
 
 const RoleRedirect = () => {
@@ -35,13 +43,6 @@ const PublicRoute = ({ children }) => {
 
   return children;
 };
-
-const PlaceholderPage = ({ title }) => (
-  <div className="space-y-4">
-    <h1 className="text-3xl font-semibold tracking-tight text-zinc-900">{title}</h1>
-    <p className="text-zinc-500">This module will be implemented next.</p>
-  </div>
-);
 
 const AppRoutes = () => {
   return (
@@ -75,10 +76,10 @@ const AppRoutes = () => {
       >
         <Route index element={<Navigate to="dashboard" replace />} />
         <Route path="dashboard" element={<AdminDashboard />} />
-        <Route path="students" element={<PlaceholderPage title="Student Management" />} />
-        <Route path="attendance" element={<PlaceholderPage title="Attendance Management" />} />
-        <Route path="menus" element={<PlaceholderPage title="Menu Management" />} />
-        <Route path="orders" element={<PlaceholderPage title="Order Management" />} />
+        <Route path="students" element={<AdminStudents />} />
+        <Route path="attendance" element={<AdminAttendance />} />
+        <Route path="menus" element={<AdminMenus />} />
+        <Route path="orders" element={<AdminOrders />} />
       </Route>
 
       <Route
@@ -91,10 +92,10 @@ const AppRoutes = () => {
       >
         <Route index element={<Navigate to="dashboard" replace />} />
         <Route path="dashboard" element={<StudentDashboard />} />
-        <Route path="profile" element={<PlaceholderPage title="My Profile" />} />
-        <Route path="attendance" element={<PlaceholderPage title="My Attendance" />} />
-        <Route path="menus" element={<PlaceholderPage title="Menus" />} />
-        <Route path="orders" element={<PlaceholderPage title="My Orders" />} />
+        <Route path="profile" element={<StudentProfile />} />
+        <Route path="attendance" element={<StudentAttendance />} />
+        <Route path="menu" element={<StudentMenu />} />
+        <Route path="orders" element={<StudentOrders />} />
       </Route>
 
       <Route path="*" element={<Navigate to="/" replace />} />
